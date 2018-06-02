@@ -1,0 +1,409 @@
+{% include 'topnavigationbar.html' %}
+{% load staticfiles %}
+
+<html>
+<head>
+<title> 1- to 4-level Drop Down</title>
+<style type="text/css">
+.DDlist { display:none; }
+.jav{
+margin:10px;
+background-color:silver;
+
+display:inline-table;
+filterable {
+  margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+  margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+  background-color: transparent;
+  border: none;
+  cursor: auto;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+  color: #333;
+}
+
+}
+</style>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+ <div class="container"  style="margin-left:5px; background-color:lightblue; border:2px solid silver;"> 
+ <h>                           COMMON IMEIS</h>
+<div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+		  
+          <a data-toggle="collapse" href="#collapse1">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+		<h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse2">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+		<h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse3">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+      </div> 
+	  </div>
+	  </div>
+ <div id="collapse1" class="panel-collapse collapse">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">COMMON BETWEEN FILE1 AND FILE3 </h3>
+        <div class="pull-right"></div>
+		{% if c13 == 'nocommons'%}
+		<h>No COMMON BETWEEN FILE1 AND FILE3</h>
+		{% else %}
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>RELATED SN</th>
+            <th>TRACKING NO.</th>
+            <th>PRODUCT NAME</th>
+            <th>RELDATED PRODUCT</th>
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in c13 %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.related_sn}}</td>
+            <td>{{result.tracking_number}}</td>
+            <td>{{result.product_name}}</td>
+            <td>{{result.related_product}}</td>
+            <td>{{result.sold_on}}</td>
+			<td>{{result.invoiced_at}}</td>
+
+          </tr>
+          
+         {% endfor %}  
+{% endif %}		 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+</div>
+  
+
+
+<div id="collapse2" class="panel-collapse collapse">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">COMMON BETWEEN FILE2 AND FILE3 </h3>
+        <div class="pull-right"></div>
+		{% if c13 == 'nocommons'%}
+		<h>No COMMON BETWEEN FILE2 AND FILE3</h>
+		{% else %}
+      </div>
+    
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>RELATED SN</th>
+            <th>TRACKING NO.</th>
+            <th>PRODUCT NAME</th>
+            <th>RELDATED PRODUCT</th>
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in c23 %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.related_sn}}</td>
+            <td>{{result.tracking_number}}</td>
+            <td>{{result.product_name}}</td>
+            <td>{{result.related_product}}</td>
+            <td>{{result.sold_on}}</td>
+			<td>{{result.invoiced_at}}</td>
+
+          </tr>
+         {% endfor %}    
+{%endif%}		 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="collapse3" class="panel-collapse collapse">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">COMMON BETWEEN ALL FILES </h3>
+        <div class="pull-right"></div>
+		{% if c123 == 'nocommons' %}
+		<h> NO COMMONS FOUND BETWEEN ALL FILES </h>
+		{% else %}
+      </div>
+    
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>RELATED SN</th>
+            <th>TRACKING NO.</th>
+            <th>PRODUCT NAME</th>
+            <th>RELDATED PRODUCT</th>
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in c123 %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.related_sn}}</td>
+            <td>{{result.tracking_number}}</td>
+            <td>{{result.product_name}}</td>
+            <td>{{result.related_product}}</td>
+            <td>{{result.sold_on}}</td>
+			<td>{{result.invoiced_at}}</td>
+
+          </tr>
+         {% endfor %}     
+{% endif %}	 
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+
+</div>
+<div class="container"  style="margin-left:5px; margin-top:10px; background-color:lightblue; border:2px solid silver;"> 
+ <h>                           COMMON IMEIS</h>
+<div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+		  
+          <a data-toggle="collapse" href="#collapse4">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+		<h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse5">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+		<h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse6">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+      </div> 
+	  </div>
+	  </div>
+ <div id="collapse4" class="panel-collapse collapse">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">UNCOMMON BETWEEN FILE1 AND FILE3 </h3>
+		
+        <div class="pull-right"></div>
+		{% if uc13 == 'nouncommons'%}
+		<h>No UNCOMMON BETWEEN FILE1 AND FILE3</h>
+		{% else %}
+      </div>
+    
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>RELATED SN</th>
+            <th>TRACKING NO</th>
+            <th>PRODUCT NAME</th>
+            <th>RELATED PRODUCT</th>
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for uncommon in uc13 %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{uncommon.related_sn}}</td>
+            <td>{{uncommon.tracking_number}}</td>
+            <td>{{uncommon.product_name}}</td>
+            <td>{{uncommon.related_product}}</td>
+			<td>{{uncommon.sold_on}}</td>
+            <td>{{uncommon.invoiced_at}}</td>
+
+          </tr>
+          
+         {% endfor %}  
+{%  endif %}		 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  
+
+
+<div id="collapse5" class="panel-collapse collapse">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">UNCOMMON BETWEEN FILE2 AND FILE3 </h3>
+        <div class="pull-right"></div>
+		{% if uc23 == 'nouncommons'%}
+		<h>No UNCOMMON BETWEEN FILE2 AND FILE3</h>
+		{% else %}
+      </div>
+    
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>RELATED SN</th>
+            <th>TRACKING NO.</th>
+            <th>PRODUCT NAME</th>
+            <th>RELDATED PRODUCT</th>
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in uc23 %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.related_sn}}</td>
+            <td>{{result.tracking_number}}</td>
+            <td>{{result.product_name}}</td>
+            <td>{{result.related_product}}</td>
+            <td>{{result.sold_on}}</td>
+			<td>{{result.invoiced_at}}</td>
+
+          </tr>  
+         {% endfor %}   
+{%endif%}		 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="collapse6" class="panel-collapse collapse">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">UNCOMMON BETWEEN ALL FILES </h3>
+        <div class="pull-right"></div>
+		 </div>
+		{% if uc123 == 'nouncommons' %}
+		<h> NO UNIQUE IMEIS IN ALL THREE FILES </h>
+		{% else  %}
+     
+    
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>RELATED SN</th>
+            <th>TRACKING NO.</th>
+            <th>PRODUCT NAME</th>
+            <th>RELDATED PRODUCT</th>
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in uc123 %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.related_sn}}</td>
+            <td>{{result.tracking_number}}</td>
+            <td>{{result.product_name}}</td>
+            <td>{{result.related_product}}</td>
+            <td>{{result.sold_on}}</td>
+			<td>{{result.invoiced_at}}</td>
+
+          </tr>
+          
+         {% endfor %}    
+{% endif %}		 
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+
+</div>

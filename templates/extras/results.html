@@ -1,0 +1,13 @@
+
+{%include 'asd1.html' %}
+
+{% block content %}
+	<h1>Search Results for: '{{ q }}'</h1>
+    {% for p in results %}
+    	{% include 'thumbnail.html' %}
+    {% empty %}
+    	No products were found matching those search terms.
+    {% endfor %}
+    <div class="cb">&nbsp;</div>
+   
+{% endblock %}

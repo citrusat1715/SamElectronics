@@ -1,0 +1,469 @@
+{% load widget_tweaks %}
+<head>
+  <title>SAMS STORE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.DDlist { display:none; }
+.jav{
+margin:10px;
+background-color:silver;
+
+display:inline-table;
+filterable {
+  margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+  margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+  background-color: transparent;
+  border: none;
+  cursor: auto;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+  color: #333;
+}
+
+}
+.sidenav-categories{
+
+background-color:white;
+display:block;
+width:150px;
+height:100px;
+margin-left:-12px;
+margin-top:10px;
+
+
+
+border-right:1px solid silver
+
+}
+.sidenav-categories a {
+text-align: left;
+    padding:10px;
+    text-decoration: none;
+    font-size: 15px;
+    font-style:calibri;
+    color: black;
+    display: block;
+}
+.sidenav-categories a:hover {
+     background-color: blue;
+    color: white;
+}
+.center-top{
+display:block;
+margin-top:10px;
+margin-left:-20px;
+margin-right:15px;
+
+display:block;
+
+}
+.center-1{
+display:block;
+margin-top:10px;
+margin-left:50px;
+
+
+}
+#center-top{
+border-top:1px solid silver;
+border-bottom:1px solid silver;
+width:250px;
+
+
+
+}
+.categories{
+font-size:15px;
+color:silver;
+padding:5px;
+}
+
+.center-categoriy-container{
+
+}
+.cat-container1{
+display:block;
+width:150px;
+height:150px;
+margin-left:1000px;
+text-align:center;
+
+
+
+}
+.cat-container{
+display:block;
+width:150px;
+height:150px;
+margin-left:50px;
+text-align:center;
+
+
+
+}
+.img-cat{
+margin:5px;
+
+
+}
+#link-container{
+
+border:2px solid; 
+border-top:2px solid;
+border-bottom:0px solid;
+width:150px; 
+padding:5px;
+margin-left:1px;
+
+}
+
+
+</style>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $("#button1").click(function(){
+	    var bla=$("#q").val()
+		var bla=bla.replace(/ /g, '+');
+		
+		$("#q").val(bla);
+        
+		
+    });
+});
+$(document).ready(function(){
+    $("#button2").click(function(){
+	
+        $("#file").attr("value", "monthly");
+    });
+});
+$(document).ready(function(){
+    $("#button3").click(function(){
+        $("#file").attr("value", "pos");
+    });
+});
+</script>
+</head>
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header" >
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+       <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="{% url 'choose_files_to_compare' %}">COMPARE FILES</a></li>
+<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR CTN DETAIL<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_weekly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='weekly' %}">SHOW/DELETE Weekly Files</a></li>
+            
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR TRAILING CREDIT<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_monthly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='monthly' %}">SHOW/DELETE Monthly Files</a></li>
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">POS REBATE<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_pos_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='pos' %}">SHOW/DELETE  POS Files</a></li>
+          </ul>
+        </li>
+		<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">SEARCH<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'search' file='file1' %}">SEARCH IN WEEKLY CTN</a></li>
+            <li><a href="{% url 'search' file='file2' %}">SEARCH IN MONTHLY TRAILIN</a></li>
+            <li><a href="{% url 'search' file='file3' %}">SEARCH IN POS</a></li>
+			 <li><a href="{% url 'search' file='all' %}">SEARCH IN ALL FILES</a></li>
+          </ul>
+        </li>
+
+   
+	  </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'admin'%}"><span class="glyphicon glyphicon-user"></span>ADMIN</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-1">
+<div class="sidenav-categories">
+
+
+      
+ <div class="row" id="link-container" style="">
+  <a data-toggle="collapse" href="#collapse1">SEARCH RESULTS FROM WEEKLY CTN</a>
+  
+  </div>
+  
+   <div class="row" id="link-container"  style="">
+   <a data-toggle="collapse" href="#collapse2">SEARCH RESULTS FROM MONTHLY TRAILING</a></div>
+   <div class="row" id="link-container" style="border-bottom:2px solid;" >
+    <a data-toggle="collapse" href="#collapse3">SEARCH RESULTS FROM POS FILE</a></div>
+   
+
+
+</div>
+
+</div>
+
+<div class="col-sm-11" >
+<div class="center-top">
+{% if messages %}
+<span class="messages" style="margin-left:60px; background-color:red;">
+    {% for message in messages %}
+    <h{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h>
+    {% endfor %}
+</span>
+{% endif %}
+<span class="messages" style="margin-left:50px;  font-size:20px; color:red;">
+{% if display %} 
+    <h>{{ display}}</h>
+{% endif %}
+   
+</span>
+
+
+ <form method="get" action="">
+<select name='header' id="List1" style="margin-left:50px;">
+<option selected>Choose Header</option>
+<option>IMEI</option>
+<option>CTN</option>
+<option>ACTIVITY</option>
+</select> &nbsp;
+<div class="row" style="margin-left:50px;">
+<input type="text" class="form-control" placeholder="Enter Values Here" name="q" id="q"></input>
+<button type="submit">Search</button>
+      </div>  
+	  
+
+ <div class="container" style="margin-left:50px; "> 
+
+ <div id="collapse1" class="panel-collapse collapse"  >
+
+   <div class="row" style=" background-color:khaki;">  
+ 
+<span>SEARCH RESULTS FROM WEEKLY CTN</span>
+<span><button><a href="{% url 'export' file='weekly' %}">Export Results</a></button></span>
+</div><div class="row">  
+ 
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{display}}</h3></div>
+        <div class="pull-right"></div>
+		
+	
+    <table class="table table-bordered" style="background-color:khaki; width:100%;">
+    <thead>
+      <tr>
+        <th style="padding-bottom:30px;">IMEI</th>
+		<th style="padding-bottom:30px;">ACTIVITY</th>
+		<th style="padding-bottom:30px;">BYOD</th>
+        <th>LOCATION CODE</th>		
+		<th>ACTIVITY DATE</th>
+        
+		<th>AUTO PAY</th>		
+		<th>PORT TYPE</th>
+        <th>COMMISSION PAYOUT</th>
+		<th>ACTIVATION COMISSION</th>
+		<th>CTN ACTIVATION DATE</th>
+		<th style="padding-bottom:30px;">SOURCE</th>
+     
+      </tr>
+    </thead>
+    <tbody>
+	
+      {% for result in w %}
+        <tr>
+          <td>{{ result.imei }}</td>        
+		  <td>{{ result.activity}}</td>
+		  <td>{{result.byod}}</td>
+		   <td>{{ result.location_code }}</td>
+		  <td>{{result.activity_date}}</td>
+         
+          <td>{{result.auto_pay}}</td>		  
+		  <td>{{result.port_type}}</td>
+          <td>${{ result.commission_payout }}</td>
+		  <td>${{result.activation_commission}}</td>
+		   <td>{{ result.ctn_activation_date }}</td>
+		   <td>{{result.file_name}}</td>
+		  
+          
+        </tr>
+		</tbody>
+      {% empty %}
+	  <tbody>
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	  
+		 
+		
+		
+    </div>
+  </div>
+</div>
+<div id="collapse2" class="panel-collapse collapse" >
+
+  <div class="row" style=" background-color:khaki;">  
+<span>SEARCH RESULTS FROM MONTHLY TRAILING</span>
+<span><button><a href="{% url 'export' file='monthly' %}">Export Results</a></button></span>
+
+</div><div class="row">  
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{display}}</h3></div>
+        <div class="pull-right"></div>
+		
+		
+    <table class="table table-bordered" style=" background-color:khaki; width:100%;">
+    <thead>
+      <tr>
+        <th>IMEI</th>
+		<th>LOCATION ID</th>
+		<th>CTN</th>
+        <th>QUALIFYING ACTIVITY TYPE</th>
+		<th>CREDIT AMOUNT</th>
+        <th>ACTIVITY DATE</th>
+		<th>SOURCE</th>
+        
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in m %}
+        <tr>
+          <td>{{ result.imei }}</td>
+          <td>{{ result.location_id }}</td>
+		  <td>{{ result.ctn}}</td>
+          <td>{{ result.qualifying_activity_type }}</td>
+		  <td>{{ result.credit_amount}}</td>
+          <td>{{ result.activity_date }}</td>  
+		  <td>{{result.file_name}}</td>
+		  
+		  
+        </tr>
+		</tbody>
+      {% empty %}
+	  <tbody>
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	  
+		 
+		
+		
+    </div>
+  </div>
+</div>
+<div id="collapse3" class="panel-collapse collapse">
+ <div class="row" style=" background-color:lightgreen;">    
+<span>SEARCH RESULTS FROM POS FILE</span>
+<span class="x"><button><a href="{% url 'export' file='pos' %}">Export Results</a></button></span>
+
+</div><div class="row">  
+  
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{display}}</h3></div>
+        <div class="pull-right"></div>
+		
+		
+    <table class="table table-bordered" style=" background-color:lightgreen; width:100%;">
+
+    <thead>
+      <tr>
+        <th>RELATED SN</th>
+		<th>TRACKING NO.</th>
+		 <th>PRODUCT NAME</th>
+        <th>RELATED PRODUCT</th>       
+        <th>SOLD ON</th>
+		<th>TERM CODE</th>
+		<th>RELATED COST</th>
+		<th>INVOICED AT</th>
+		<th>SALES PERSON</th>
+		<th>SOURCE</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in v %}
+        <tr>
+          <td>{{ result.related_sn }}</td>
+          <td style="width:100px;">{{ result.tracking_number }}</td>
+		  <td>{{ result.product_name}}</td>
+          <td>{{ result.related_product }}</td>
+          
+		  <td>{{ result.sold_on}}</td>
+		  <td>{{result.term_code}}</td>
+		  <td>{{result.related_cost}}</td>
+		  <td>{{result.invoiced_at}}</td>
+		  <td>{{ result.sales_person}}</td>
+		  <td>{{result.file_name}}</td>
+		  
+          
+        </tr>
+		 </tbody>
+      {% empty %}
+	  <tbody>
+        <tr>
+		
+          <td colspan="5">No data</td>
+        </tr>
+		</tbody>
+      {% endfor %}
+   
+  </table>
+		 
+		
+		
+    </div>
+  </div>
+</div>
+</div>
+ </div> 
+
+</div>
+</form>

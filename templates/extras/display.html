@@ -1,0 +1,349 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+
+		.floatedTable {
+            float:left;
+			
+        }
+		Inline{
+		display:inline-block;
+		}
+		
+table {
+  border-collapse: collapse;
+  border: 3px solid purple;
+}
+
+thead th:nth-child(1) {
+  width: 30%;
+}
+
+thead th:nth-child(2) {
+  width: 20%;
+}
+
+thead th:nth-child(3) {
+  width: 15%;
+}
+
+thead th:nth-child(4) {
+  width: 30%;
+}
+thead th:nth-child(5) {
+  width: 5%;
+}
+th, td {
+  padding: 20px;
+}
+#monthly{
+margin-top:10px;
+}
+#weekly{
+width:100%;
+margin-top:5px;
+}
+#Vendor{
+margin-top:5px;
+width:100%
+}
+</style>
+</head>
+
+{% if none %}
+<h style="font-size:30px; "> No Common Imei in the 3 Files</h>
+{% else %}
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+		  
+          <a data-toggle="collapse" href="#collapse1">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+		<h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse2">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+		<h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse1">Common Between Weekly and Vendor. Click to Expand and Collapse</a>
+        </h4>
+      </div>
+
+<div id="collapse1" class="panel-collapse collapse">
+<div style="background-color:silver;padding:5px;display:table;display:Inline-block;">
+<header>Results From Weekly</header>
+{% for w in weekly %}
+    <table id="weekly"  border=1 class="Inline">
+
+        <tr>		
+<th bgcolor="Green">IMEI</th>		
+            <td>{{w.imei}}</td>
+			<th bgcolor="Green">Location COde</th>
+			<td>{{w.location_code}}</td>
+			<th bgcolor="Green">Commission</th>
+			<td>{{w.commission}}</td>
+
+<th bgcolor="Green">Activity</th>		
+            <td>{{w.activity}}</td>
+			<th bgcolor="Green">CTN</th>
+			<td>{{w.ctn}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">SPIF1</th>
+			<td>{{w.spif1}}</td>			
+		
+<th bgcolor="Green">Activity Name</th>		
+            <td>{{w.activity_name}}</td>
+			<th bgcolor="Green">MRC</th>
+			<td>{{w.mrc}}</td>
+			<th bgcolor="Green">SPIF2</th>
+			<td>{{w.spif2}}</td>
+
+<th bgcolor="Green">BYOD</th>		
+            <td>{{w.byod}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">PORTTYPE</th>
+			
+		
+			<td>{{w.port_type}}</td>
+			<th bgcolor="Green">Activation COmmission</th>
+			<td>{{w.activation_commission}}</td>
+			
+ 
+<th bgcolor="Green">Auto Pay</th>		
+            <td>{{w.auto_pay}}</td>
+			<th bgcolor="Green">BAN</th>
+			<td>{{w.ban}}</td>
+			<th bgcolor="Green">RRC</th>
+			<td>{{w.rrc}}</td>
+			</tr>
+			
+    </table>
+{% endfor %}
+</div>
+<div id="collapse2" class="panel-collapse collapse">
+<div style="background-color:gray;padding:5px;display:table;display:Inline-block;">	
+<h>Common in Monthly</h>
+{% for m in monthly %}
+    <table id="monthly" border=1 class="Inline">
+
+<tr>      	
+      <th bgcolor="Green">IMEI/ICCID</th>		
+            <td>{{m.imei}}</td>
+			<th bgcolor="Green">CTN</th>
+			<td>{{m.ctn}}</td>
+			<th bgcolor="Green">DEVICE NAME</th>
+			<td>{{m.ctn}}</td>
+
+<th bgcolor="Green">LOCATION ID</th>		
+            <td>{{m.location_id}}</td>
+			<th bgcolor="Green">QUALIFYING ACTIVITY TYPE</th>
+			<td>{{m.qualifying_activity_type}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">PROMOTION SALE PRICE</th>
+			<td>{{m.promotion_sale_price}}</td>
+
+      <th bgcolor="Green">ACTIVITY DATE</th>		
+            <td>{{m.activity_date}}</td>
+			<th bgcolor="Green">PROMOTION CATEGORY</th>
+			<td>{{m.promotion_category}}</td>
+			<th bgcolor="Green">IMM PURCHASE PRICE</th>
+			<td>{{m.purchase_price}}</td>
+
+<th bgcolor="Green">CREDIT AMOUNT</th>		
+            <td>{{m.credit_amount}}</td>
+			</tr>
+			
+    </table>
+{% endfor %}
+</div>
+<div style="background-color:silver; padding:5px;display:table;display:Inline-block;">
+<header>Common in Vendor File</header>
+{% for v in vendor %}
+<table border=2  class="Inline">
+<tr>
+      <th bgcolor="Green">Related SN/IMEI</th>		
+            <td>{{v.related_sn}}</td>
+			<th bgcolor="Green">RELATED COST</th>
+			<td>{{v.related_cost}}</td>
+			<th bgcolor="Green">CUSTOMER</th>
+			<td>{{v.customer}}</td>
+
+<th bgcolor="Green">TRACKING #</th>		
+            <td>{{v.tracking_number}}</td>
+			<th bgcolor="Green">RELATED PRICE</th>
+			<td>{{v.related_price}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">SALES PERSON</th>
+			<td>{{v.sales_person}}</td>
+
+      <th bgcolor="Green">PRODUCT NAME</th>		
+            <td>{{v.product_name}}</td>
+			<th bgcolor="Green">RATE PLAN</th>
+			<td>{{v.rate_plan}}</td>
+			<th bgcolor="Green">SOLD ON</th>
+			<td>{{v.sold_on}}</td>
+
+<th bgcolor="Green">RELATED PRODUCT</th>		
+            <td>{{v.related_product}}</td>
+			</tr>
+			<tr>
+<th bgcolor="Green">TERM CODE</th>		
+            <td>{{v.term_code}}</td>
+<th bgcolor="Green">Invoiced AT</th>		
+            <td>{{v.invoiced_at}}</td>
+			
+        </tr>			
+    </table>
+	{% endfor %}
+	<h>
+
+</h>
+</div>
+<div>
+
+</div>
+<div id="collapse2" class="panel-collapse collapse">
+
+<header>Results From Weekly</header>
+{% for w in weekly %}
+    <table id="weekly"  border=1 class="Inline">
+
+        <tr>		
+<th bgcolor="Green">IMEI</th>		
+            <td>{{w.imei}}</td>
+			<th bgcolor="Green">Location COde</th>
+			<td>{{w.location_code}}</td>
+			<th bgcolor="Green">Commission</th>
+			<td>{{w.commission}}</td>
+
+<th bgcolor="Green">Activity</th>		
+            <td>{{w.activity}}</td>
+			<th bgcolor="Green">CTN</th>
+			<td>{{w.ctn}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">SPIF1</th>
+			<td>{{w.spif1}}</td>			
+		
+<th bgcolor="Green">Activity Name</th>		
+            <td>{{w.activity_name}}</td>
+			<th bgcolor="Green">MRC</th>
+			<td>{{w.mrc}}</td>
+			<th bgcolor="Green">SPIF2</th>
+			<td>{{w.spif2}}</td>
+
+<th bgcolor="Green">BYOD</th>		
+            <td>{{w.byod}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">PORTTYPE</th>
+			
+		
+			<td>{{w.port_type}}</td>
+			<th bgcolor="Green">Activation COmmission</th>
+			<td>{{w.activation_commission}}</td>
+			
+ 
+<th bgcolor="Green">Auto Pay</th>		
+            <td>{{w.auto_pay}}</td>
+			<th bgcolor="Green">BAN</th>
+			<td>{{w.ban}}</td>
+			<th bgcolor="Green">RRC</th>
+			<td>{{w.rrc}}</td>
+			</tr>
+			
+    </table>
+{% endfor %}
+</div>
+<div style="background-color:gray;padding:5px;display:table;display:Inline-block;">	
+<h>Common in Monthly</h>
+{% for m in monthly %}
+    <table id="monthly" border=1 class="Inline">
+
+<tr>      	
+      <th bgcolor="Green">IMEI/ICCID</th>		
+            <td>{{m.imei}}</td>
+			<th bgcolor="Green">CTN</th>
+			<td>{{m.ctn}}</td>
+			<th bgcolor="Green">DEVICE NAME</th>
+			<td>{{m.ctn}}</td>
+
+<th bgcolor="Green">LOCATION ID</th>		
+            <td>{{m.location_id}}</td>
+			<th bgcolor="Green">QUALIFYING ACTIVITY TYPE</th>
+			<td>{{m.qualifying_activity_type}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">PROMOTION SALE PRICE</th>
+			<td>{{m.promotion_sale_price}}</td>
+
+      <th bgcolor="Green">ACTIVITY DATE</th>		
+            <td>{{m.activity_date}}</td>
+			<th bgcolor="Green">PROMOTION CATEGORY</th>
+			<td>{{m.promotion_category}}</td>
+			<th bgcolor="Green">IMM PURCHASE PRICE</th>
+			<td>{{m.purchase_price}}</td>
+
+<th bgcolor="Green">CREDIT AMOUNT</th>		
+            <td>{{m.credit_amount}}</td>
+			</tr>
+			
+    </table>
+{% endfor %}
+</div>
+<div style="background-color:silver; padding:5px;display:table;display:Inline-block;">
+<header>Common in Vendor File</header>
+{% for v in vendor %}
+<table border=2  class="Inline">
+<tr>
+      <th bgcolor="Green">Related SN/IMEI</th>		
+            <td>{{v.related_sn}}</td>
+			<th bgcolor="Green">RELATED COST</th>
+			<td>{{v.related_cost}}</td>
+			<th bgcolor="Green">CUSTOMER</th>
+			<td>{{v.customer}}</td>
+
+<th bgcolor="Green">TRACKING #</th>		
+            <td>{{v.tracking_number}}</td>
+			<th bgcolor="Green">RELATED PRICE</th>
+			<td>{{v.related_price}}</td>
+			</tr>
+			<tr>
+			<th bgcolor="Green">SALES PERSON</th>
+			<td>{{v.sales_person}}</td>
+
+      <th bgcolor="Green">PRODUCT NAME</th>		
+            <td>{{v.product_name}}</td>
+			<th bgcolor="Green">RATE PLAN</th>
+			<td>{{v.rate_plan}}</td>
+			<th bgcolor="Green">SOLD ON</th>
+			<td>{{v.sold_on}}</td>
+
+<th bgcolor="Green">RELATED PRODUCT</th>		
+            <td>{{v.related_product}}</td>
+			</tr>
+			<tr>
+<th bgcolor="Green">TERM CODE</th>		
+            <td>{{v.term_code}}</td>
+<th bgcolor="Green">Invoiced AT</th>		
+            <td>{{v.invoiced_at}}</td>
+			
+        </tr>			
+    </table>
+	{% endfor %}
+	<h>
+
+</h>
+</div>
+<div>
+
+</div>
+</div>
+</div>
+{% endif %}

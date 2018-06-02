@@ -1,0 +1,316 @@
+{% load widget_tweaks %}
+<head>
+  <title>SAMS STORE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.DDlist { display:none; }
+.jav{
+margin:10px;
+background-color:silver;
+
+display:inline-table;
+filterable {
+  margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+  margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+  background-color: transparent;
+  border: none;
+  cursor: auto;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+  color: #333;
+}
+
+}
+.sidenav-categories{
+
+background-color:white;
+display:block;
+width:150px;
+height:100px;
+margin-left:-12px;
+margin-top:10px;
+
+
+
+border-right:1px solid silver
+
+}
+.sidenav-categories a {
+text-align: left;
+    padding:10px;
+    text-decoration: none;
+    font-size: 15px;
+    font-style:calibri;
+    color: black;
+    display: block;
+}
+.sidenav-categories a:hover {
+     background-color: blue;
+    color: white;
+}
+.center-top{
+display:block;
+margin-top:10px;
+margin-left:-20px;
+margin-right:15px;
+
+display:block;
+
+}
+.center-1{
+display:block;
+margin-top:10px;
+margin-left:50px;
+
+
+}
+#center-top{
+border-top:1px solid silver;
+border-bottom:1px solid silver;
+width:250px;
+
+
+
+}
+.categories{
+font-size:15px;
+color:silver;
+padding:5px;
+}
+
+.center-categoriy-container{
+
+}
+.cat-container1{
+display:block;
+width:150px;
+height:150px;
+margin-left:1000px;
+text-align:center;
+
+
+
+}
+.cat-container{
+display:block;
+width:150px;
+height:150px;
+margin-left:50px;
+text-align:center;
+
+
+
+}
+.img-cat{
+margin:5px;
+
+
+}
+#link-container{
+
+border:2px solid; 
+border-top:2px solid;
+border-bottom:0px solid;
+width:150px; 
+padding:5px;
+margin-left:1px;
+
+}
+
+</style>
+</head>
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header" >
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">SAM's STORE</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="{% url 'choose_files_to_compare' %}">COMPARE FILES</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">IMPORT FILES<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_weekly_file' %}">IMPORT WEEKLY CTN</a></li>
+            <li><a href="{% url 'import_monthly_file' %}">IMPORT MONTHLY TRAILIN</a></li>
+            <li><a href="{% url 'import_vendor_file' %}">IMPORT POS</a></li>
+          </ul>
+        </li>
+		<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">SEARCH<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'search' file='file1' %}">SEARCH IN WEEKLY CTN</a></li>
+            <li><a href="{% url 'search' file='file2' %}">SEARCH IN MONTHLY TRAILIN</a></li>
+            <li><a href="{% url 'search' file='file3' %}">SEARCH IN POS</a></li>
+			 <li><a href="{% url 'search' file='all' %}">SEARCH IN ALL FILES</a></li>
+          </ul>
+        </li>
+
+   
+	  </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span>ADMIN</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-1">
+<div class="sidenav-categories">
+
+
+      
+ <div class="row" id="link-container" style="">
+  <a data-toggle="collapse" href="#collapse1">SEARCH RESULTS FROM WEEKLY CTN</a></div>
+   <div class="row" id="link-container"  style="">
+   <a data-toggle="collapse" href="#collapse2">SEARCH RESULTS FROM MONTHLY TRAILING</a></div>
+   <div class="row" id="link-container"  >
+    <a data-toggle="collapse" href="#collapse3">SEARCH RESULTS FROM POS FILE</a></div>
+   
+
+
+</div>
+
+</div>
+<div class="col-sm-11" >
+<div class="center-top">
+
+  <form method="get">
+
+      <h4 style="margin-top: 0">Filter</h4>
+      <div class="row">
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.location_code.label_tag }}
+          {% render_field filter.form.location_code class="form-control" %}
+        </div>
+		</div>
+
+  
+ <div class="container"  style="margin-left:50px; background-color:lightblue; border:2px solid silver;"> 
+
+ <div id="collapse1" class="panel-collapse collapse">
+
+  <div class="row">  
+<li><form method="POST" action="">{% csrf_token %}<span><input type="submit"  value="Export Results" style="margin-top:-14px;"/>
+</span></form></li>
+        
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{display}}</h3></div>
+        <div class="pull-right"></div>
+		
+		
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>IMEI</th>
+        <th>LOCATION CODE</th>
+        <th>CTN ACTIVATION DATE</th>
+        <th>COMMISSION PAYOUT</th>
+        <th>ACTIVITY</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+      {% for result in filter.qs %}
+        <tr>
+          <td>{{ result.imei }}</td>
+          <td>{{ result.location_code }}</td>
+          <td>{{ result.ctn_activation_date }}</td>
+          <td>{{ result.activation_commission }}</td>
+		  <td>{{ result.activity}}</td>
+          
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	  
+		 
+		
+		
+    </div>
+  </div>
+</div>
+<div id="collapse1" class="panel-collapse collapse">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{display}}</h3></div>
+        <div class="pull-right"></div>
+		
+		
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>IMEI</th>
+		<th>LOCATION ID</th>
+		<th>CTN</th>
+        <th>QUALIFYING ACTIVITY TYPE</th>
+        <th>ACTIVITY DATE</th>
+        <th>CREDIT AMOUNT</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in filter.qs %}
+        <tr>
+          <td>{{ result.imei }}</td>
+          <td>{{ result.location_id }}</td>
+		  <td>{{ result.ctn}}</td>
+          <td>{{ result.qualifying_activity_type }}</td>
+          <td>{{ result.activity_date }}</td>
+		  
+		  <td>{{ result.credit_amount}}</td>
+          
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	  
+		 
+		
+		
+    </div>
+  </div>
+</div>
+
+</div>
+ </div> 
+
+</div>

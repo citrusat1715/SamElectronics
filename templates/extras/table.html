@@ -1,0 +1,156 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.dropdown {
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    display: inline-block;
+    color: white;
+    
+    
+}
+.color-formset{
+margin:10px;
+background-color:silver;
+
+display:inline-table;
+
+}
+
+p{ padding:10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+ul.a {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+ul.c {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+	margin-bottom:5px;
+	
+    overflow: hidden;
+    background-color: red;
+}
+ul.d {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    overflow: hidden;
+    background-color: lightyellow;
+}
+
+li {
+    
+    text-align: center;
+    
+    text-decoration: none;
+    display: inline-block;
+    color: black;
+}
+
+li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li.c {
+    
+    color: black;
+    text-align: center;
+   
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+
+.smartphone {
+
+}
+.brand_errors{
+
+}
+
+</style>
+
+</head>
+<body>
+
+<form  id="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+{% if form.non_field_errors %}
+ 
+<ul class="c"> 
+   {% for error in form.non_field_errors %}
+        <li>{{error}}</li>
+		{% endfor %}
+		  </ul>
+		    
+            {% endif %}  
+          
+
+<table border="1">
+
+<tr class="sub_category">
+<tr>
+        <td><h>lol</h></td>
+        <td>
+		<h>lol</h>
+        </td>
+		<td>
+		<h>lol</h>
+		</td
+      </tr>
+	  
+       
+
+      </tr>
+	  
+	  
+
+	
+
+  </table>
+
+{
+
+</body>
+</html>

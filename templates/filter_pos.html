@@ -1,0 +1,251 @@
+
+
+{% load widget_tweaks %}
+
+
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+
+
+.sidenav-categories{
+
+background-color:white;
+display:block;
+width:140px;
+height:100%;
+margin-left:-12px;
+margin-top:10px;
+
+
+
+border-right:1px solid silver
+
+}
+.sidenav-categories a {
+text-align: left;
+    padding:10px;
+    text-decoration: none;
+    font-size: 15px;
+    font-style:calibri;
+    color: black;
+    display: block;
+}
+.sidenav-categories a:hover {
+     background-color: blue;
+    color: white;
+}
+.center-top{
+display:block;
+margin-top:10px;
+margin-left:50px;
+margin-right:15px;
+
+display:block;
+
+}
+.center-1{
+display:block;
+margin-top:10px;
+margin-left:50px;
+
+
+}
+#center-top{
+border-top:1px solid silver;
+border-bottom:1px solid silver;
+
+
+
+}
+.categories{
+font-size:15px;
+color:silver;
+padding:5px;
+}
+
+.center-categoriy-container{
+
+}
+.cat-container1{
+display:block;
+width:150px;
+height:150px;
+margin-left:1000px;
+text-align:center;
+
+
+
+}
+.cat-container{
+display:block;
+width:150px;
+height:150px;
+margin-left:50px;
+text-align:center;
+
+
+
+}
+.img-cat{
+margin:5px;
+
+
+}
+#cat-container{
+
+margin-left:50px;
+display:block;
+
+}
+
+</style>
+</head>
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header" >
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+  <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="{% url 'choose_files_to_compare' %}">COMPARE FILES</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR CTN DETAIL<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_weekly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='weekly' %}">SHOW/DELETE Weekly Files</a></li>
+            
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR TRAILING CREDIT<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_monthly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='monthly' %}">SHOW/DELETE Monthly Files</a></li>
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">POS REBATE<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_pos_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='pos' %}">SHOW/DELETE  POS Files</a></li>
+          </ul>
+        </li>
+		<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">SEARCH<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'search' file='file1' %}">SEARCH IN WEEKLY CTN</a></li>
+            <li><a href="{% url 'search' file='file2' %}">SEARCH IN MONTHLY TRAILIN</a></li>
+            <li><a href="{% url 'search' file='file3' %}">SEARCH IN POS</a></li>
+			 <li><a href="{% url 'search' file='all' %}">SEARCH IN ALL FILES</a></li>
+          </ul>
+        </li>
+
+   
+	  </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span>ADMIN</a></li>
+     <li><a><form method="POST" action="">{% csrf_token %}<span><input type="submit"  value="Export Results" style="margin-top:-14px;"/></span></a></form></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% block content %}
+  <form method="get">
+ <h4 style="margin-left: 10px;"> CHOOSE FILTER</h4>
+    <div class="container-fluid"  style="margin-left:10px;padding-top:10px; margin-right:10px; border-bottom:2px solid;border-top:2px solid; height:210px;">
+      <div class="row" style="margin-top:5px;">
+        <div class="form-group col-sm-4 col-md-3">
+		
+          {{ filter.form.related_sn.label_tag }}
+          {% render_field filter.form.related_sn class="form-control" %}
+        </div>
+		<div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.tracking_number.label_tag }}
+          {% render_field filter.form.tracking_number class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.product_name.label_tag }}
+          {% render_field filter.form.product_name class="form-control" %}
+        </div>
+        
+		<div class="form-group col-sm-4 col-md-3" >
+          {{ filter.form.related_product.label_tag }}
+          {% render_field filter.form.related_product class="form-control" %}
+        </div>
+
+		<div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.invoiced_at.label_tag }}
+          {% render_field filter.form.invoiced_at class="form-control" %}
+        </div>
+		
+		</div>     
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+      </div>
+	 </div>
+  </form>
+<div class="container-fluid" style="margin-left:10px; margin-right:10px; border-top:2px solid ;">
+
+  
+</form>
+  <table class="table table-bordered" style="border-left:2px solid; border-right:2px solid;">
+    <thead>
+      <tr>
+        <th>RELATED SN</th>
+		<th>TRACKING NO.</th>
+		 <th>PRODUCT NAME</th>
+        <th>RELATED PRODUCT</th>       
+        <th>SOLD ON</th>
+		<th>TERM CODE</th>
+		<th>RELATED COST</th>
+		<th>INVOICED AT</th>
+		<th>SALES PERSON</th>
+		<th>SOURCE</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in filter.qs %}
+        <tr>
+          <td><a href="{{result.get_absolute_url}}">{{ result.related_sn }}</a></td>
+        
+          <td style="width:100px;">{{ result.tracking_number }}</td>
+		  <td>{{ result.product_name}}</td>
+          <td>{{ result.related_product }}</td>
+          
+		  <td>{{ result.sold_on}}</td>
+		  <td>{{result.term_code}}</td>
+		  <td>{{result.related_cost}}</td>
+		  <td>{{result.invoiced_at}}</td>
+		  <td>{{ result.sales_person}}</td>
+		  <td>{{result.file_name}}</td>
+		 
+		  
+          
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+</div>
+</div>

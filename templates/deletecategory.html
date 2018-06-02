@@ -1,0 +1,4 @@
+<form method="post">{% csrf_token %}
+    Are you sure you want to delete the "{{ fname}}"? All the related data will be deleted
+    <input type="submit" value="Yes" name="Yes"/><input type="submit" value="No" name="NO"/>
+</form>

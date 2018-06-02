@@ -1,0 +1,19 @@
+{% extends original_change_list_template %}
+{% load i18n static admin_modify %}
+{# django == 1.5 support #}
+{# {% load cycle from future %} #}
+
+{% block extrastyle %}
+	{{ advanced_filters.media.css }}
+	{{ block.super }}
+{% endblock extrastyle %}
+
+{% block object-tools-items %}
+	{{ block.super }}
+	{# Add a link to the end of the tool items #}
+	<li><a href="{% url 'import_weekly_file' %}" class="btn btn-high btn-success">Import File</a>
+</li>
+	
+	
+	
+{% endblock object-tools-items %}

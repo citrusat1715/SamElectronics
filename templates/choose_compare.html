@@ -1,0 +1,92 @@
+{% include 'topnavigationbar.html' %}
+
+<style type="text/css" media="screen">
+
+
+
+</style>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id="table_container">
+<div class="row">
+<h style=" margin-left:12px;font-size:50px;">CHOOSE FILES TO COMPARE</h>
+</div>
+<div class="row">
+<form method = "POST" action="">
+{% csrf_token %}
+
+    <table  width="300" border="1" style="float:left; margin-left:20px;">
+	<th>Weekly Files</th>
+	{% for w in weekly %}
+
+        <tr>		   
+            <td><input type="radio" name="weekly_field" value="{{w}}"
+      {% ifequal form.my_choice_field.data choice.0 %} 
+         checked="checked"
+      {% endifequal %}/>
+    
+
+			
+			{{w}}</td>
+        </tr>		
+		{% endfor %}
+    </table>
+
+	
+
+    <table width="300" border="1" style="float:left;">
+	<th>Monthly Files</th>
+	{% for m in monthly %}
+        <tr>		
+            <td>
+		  <input type="radio" name="monthly_field" value="{{m}}"
+      {% ifequal form.my_choice_field.data choice.0 %} 
+         checked="checked"
+      {% endifequal %}/>
+    
+
+			
+			{{m}}
+			</td>
+            
+        
+	
+        </tr>
+		{% endfor %}
+    </table>
+
+
+
+<table width="300" border="1" style="float:left;">
+	<th>Vendor Files</th>
+	{% for v in vendor %}
+        <tr>		
+            <td>
+
+    <input type="radio" name="vendor_field" value="{{v}}"
+      {% ifequal form.my_choice_field.data choice.0 %} 
+         checked="checked"
+      {% endifequal %}/>
+    
+
+			
+			{{v}}</td>
+            
+           
+        </tr>
+		{% endfor %}
+    </table>
+</div>	
+</div>
+<div class="row">
+
+<input type="submit" value="submit" style="margin-left:20px; margin-top:5px;">	
+</div>
+</form>
+

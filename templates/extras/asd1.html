@@ -1,0 +1,428 @@
+{% include 'topnavigationbar.html' %}
+{% load staticfiles %}
+
+<html>
+<head>
+<title> 1- to 4-level Drop Down</title>
+<style type="text/css">
+.DDlist { display:none; }
+.jav{
+margin:10px;
+background-color:silver;
+
+display:inline-table;
+filterable {
+  margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+  margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+  background-color: transparent;
+  border: none;
+  cursor: auto;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+  color: #333;
+}
+
+}
+</style>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+// From: http://www.codingforums.com/showthread.php?t=202456
+// and: http://www.codingforums.com/showthread.php?t=169465
+// Modified for 1 to 4 (+) level drop down selections
+
+var categories = [];
+  categories["startList"] = ["File1","File2",'File3', 'All Files'];        // Level 1  (True|False is 1 level only)
+
+categories["File1"] = ["LOCATION CODE","ACTIVITY","CTN ACTIVATION DATE","IMEI", "COMMISSION PAYOUT"]; 
+
+                 // Level 2
+
+
+categories["File2"] = ["Location ID","ACTIVITY DATE","IMEI", "CTN", "QUALIFYING ACTIVITY TYPE", "CREDIT AMOUNT"];      // Level 2
+    
+
+categories['File3'] = ["TRACKING NO","PRODUCT NAME","RELATED SN","RELATED PRODUCT", "SOLD ON", "INVOICED AT"];    
+categories['All Files'] = ['IEMI'];                        // Level 2 only
+
+var nLists = 2; // number of lists in the set
+ 
+function fillSelect(currCat,currList){
+  var step = Number(currList.name.replace(/\D/g,""));
+  for (i=step; i<nLists+1; i++) {
+    document.forms[0]['field'+i].length = 1;
+    document.forms[0]['field'+i].selectedIndex = 0;
+    document.getElementById('List'+i).style.display = 'none';
+  }
+  var nCat = categories[currCat];
+  if (nCat != undefined) { 
+    document.getElementById('List'+step).style.display = 'inline';
+    for (each in nCat) 	{
+	
+      var nOption = document.createElement('option'); 
+      var nData = document.createTextNode(nCat[each]); 
+      nOption.setAttribute('value',nCat[each]); 
+      nOption.appendChild(nData); 
+	 
+	  
+      currList.appendChild(nOption); 
+    }
+  } 
+}
+
+function getValues() { 
+  var str = '';
+  str += document.getElementById('List1').value+'\n';
+  for (var i=2; i<=nLists; i++) {
+    if (document.getElementById('List'+i).selectedIndex != 0) {
+      str += document.getElementById('List'+i).value+'\n';
+	  }
+  }
+   
+  alert(str); 
+}
+
+function init() { fillSelect('startList',document.forms[0]['List1']); }
+
+
+function search() {
+    var b= $("#List2 option:selected").text();
+	
+	
+     if (b ==="CTN ACTIVATION DATE" ||b==="ACTIVITY DATE")
+	 { $('#q').daterangepicker( {
+	     
+       
+        locale: {
+		 
+            format: 'YYYY/MM/DD'
+        }
+    });}
+	else
+	{
+	$('#q').off(daterangepicker());
+}if (b =="COMMISSION PAYOUT" )
+	 {document.getElementById("q").onclick = newwind();}}
+ function newwind(){
+    window.open("{% url 'commission' %}","_blank","width=400,height=400","replace=False");}
+ 
+ 
+function commission(){
+
+var z= $("#List2 option:selected").text();
+
+	
+     if (z =="COMMISSION PAYOUT"){
+	document.getElementById("q").addEventListener("click", newwind);
+	
+ 
+}
+}
+var
+  userFilter, statusFilter, milestoneFilter, priorityFilter, tagsFilter;
+
+function updateFilters() {
+  $('.task-list-row').hide().filter(function() {
+    var
+      self = $(this),
+      result = true; // not guilty until proven guilty
+
+    if (userFilter && (userFilter != 'None')) {
+      result = result && userFilter === self.data('assigned-user');
+    }
+    if (statusFilter && (statusFilter != 'Any')) {
+      result = result && statusFilter === self.data('status');
+    }
+    if (milestoneFilter && (milestoneFilter != 'None')) {
+      result = result && milestoneFilter === self.data('milestone');
+    }
+    if (priorityFilter && (priorityFilter != 'None')) {
+      result = result && priorityFilter === self.data('priority');
+    }
+    if (tagsFilter && (tagsFilter != 'None')) {
+      result = result && tagsFilter === self.data('tags');
+    }
+    
+    return result;
+  }).show();
+}
+
+// Assigned User Dropdown Filter
+$('#assigned-user-filter').on('change', function() {
+  userFilter = this.value;
+  updateFilters();
+});
+
+// Task Status Dropdown Filter
+$('#status-filter').on('change', function() {
+  statusFilter = this.value;
+  updateFilters();
+});
+
+// Task Milestone Dropdown Filter
+$('#milestone-filter').on('change', function() {
+  milestoneFilter = this.value;
+  updateFilters();
+});
+
+// Task Priority Dropdown Filter
+$('#priority-filter').on('change', function() {
+  priorityFilter = this.value;
+  updateFilters();
+});
+
+// Task Tags Dropdown Filter
+$('#tags-filter').on('change', function() {
+  tagsFilter = this.value;
+  updateFilters();
+});
+
+/*
+future use for a text input filter
+$('#search').on('click', function() {
+    $('.box').hide().filter(function() {
+        return $(this).data('order-number') == $('#search-criteria').val().trim();
+    }).show();
+});*/
+navigator.appName == "Microsoft Internet Explorer"
+   ? attachEvent('onload', init, false) 
+		   : addEventListener('load', init, false);	
+
+
+
+
+</script>
+</head>
+<body>
+{% if results %}
+<br><h2>SEARCH RESULTS</h2><hr><br>
+{% else %}
+<br><h2>MAKE A SEARCH</h2><hr><br>
+{% endif %}
+
+<form id="search" action="{% url 'search_results' %}" method="POST">
+{% csrf_token %}
+
+<select name='field1' id="List1" onchange="fillSelect(this.value,this.form['List2'])" >
+<option selected>Choose File</option>
+</select> &nbsp;
+<select name='field2' id="List2" onchange="fillSelect(this.value,this.form['List3'],search(),commission())" class="DDlist">
+<option selected>Choose Header</option>
+</select> &nbsp;
+<input type="text"  class="form-control" placeholder="Enter Values Here" name="q" id="q" />
+	<input type="submit" value="Search" />
+
+</form>
+{% with x=file %}
+{% if results %}
+<div class="container">
+  <div class="row">   
+  <table class="table">
+        <thead>
+          <tr class="filters">
+            <th>Assigned User
+              <select id="assigned-user-filter" class="form-control">
+                <option>None</option>
+                <option>John</option>
+                <option>Rob</option>
+                <option>Larry</option>
+                <option>Donald</option>
+                <option>Roger</option>
+              </select>
+            </th>
+            <th>Status
+              <select id="status-filter" class="form-control">
+                <option>Any</option>
+                <option>Not Started</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+              </select>
+            </th>
+            <th>Milestone
+              <select id="milestone-filter" class="form-control">
+                <option>None</option>
+                <option>Milestone 1</option>
+                <option>Milestone 2</option>
+                <option>Milestone 3</option>
+              </select>
+            </th>
+            <th>Priority
+              <select id="priority-filter" class="form-control">
+                <option>Any</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+                <option>Urgent</option>
+              </select>
+            </th>
+            <th>Tags
+              <select id="tags-filter" class="form-control">
+                <option>None</option>
+                <option>Tag 1</option>
+                <option>Tag 2</option>
+                <option>Tag 3</option>
+              </select>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    
+  
+    <div class="panel panel-primary filterable">
+      <div class="panel-heading">
+        <h3 class="panel-title">RESULTS IN {{x}}</h3>
+        <div class="pull-right"></div>
+      </div>
+{%if x == "FILE1" %}     
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>IMEI</th>
+            <th>LOCATION CODE</th>
+            <th>Activity</th>
+            <th>CTN ACTIVATION DATE</th>
+            <th>COMMISSION PAYOUT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in results %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.imei}}</td>
+            <td>{{result.location_code}}</td>
+            <td>{{result.activity}}</td>
+            <td>{{result.ctn_activation_date}}</td>
+            <td>{{result.commission_payout}}</td>
+
+          </tr>
+          
+         {% endfor %}
+          
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+{%if x == "FILE2" %}     
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>IMEI</th>
+            <th>LOCATION ID</th>
+            <th>Activity DATE</th>
+            <th>CTN </th>			 
+            <th>QUALIFYING ACTIVITY TYPE</th>
+			<th>CREDIT AMOUNT </th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in results %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.imei}}</td>
+            <td>{{result.location_id}}</td>
+            <td>{{result.activity_date}}</td>
+            <td>{{result.ctn}}</td>
+            <td>{{result.qualifying_activity_type}}
+			  <td>{{result.credit_amount}}</td></td>
+
+          </tr>
+          
+         {% endfor %}
+          
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+{%if x == "FILE3" %}     
+      <table id="task-list-tbl" class="table">
+        <thead>
+          <tr>
+            <th>RELATED SN</th>
+            <th>TRACKING NO.</th>
+            <th>PRODUCT NAME</th>
+            <th>RELATED PRODUCT </th>			 
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+        
+        <tbody>
+        {% for result in results %}  
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+            <td>{{result.related_sn}}</td>
+            <td>{{result.tracking_number}}</td>
+            <td>{{result.product_name}}</td>
+            <td>{{result.related_product}}</td>
+            <td>{{result.sold_on}}
+			  <td>{{result.invoiced_at}}</td></td>
+
+          </tr>
+          
+         {% endfor %}
+          
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+{% endwith %}
+
+<!-- can add more levels if desired as "List5"+ -->
+
+
+
+</body>
+
+</html>

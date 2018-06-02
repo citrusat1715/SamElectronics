@@ -1,0 +1,75 @@
+
+<body>
+<form method="GET">
+
+<table class="form-table" id="customFields">
+<tr valign="top">
+<th scope="row">
+<label for="Operator">Operator</label>
+</th>
+<td>
+<select class="query-operator">
+<option value="iexact" selected="selected">Equals</option>
+<option value="lt">Less Than</option>
+<option value="gt">Greater Than</option>
+<option value="gte">Greater Than or Equal to
+</option><option value="gte">Less Than or Equal to</option>
+</select></td>
+<td><input type="text" class="code" id="value" name="value0" value="" placeholder="Value" /></td>
+
+<td>
+
+			<a href="javascript:void(0);" class="addCF">Add</a>
+      </td>
+		  
+</table>
+ <input type="submit" id="bt" value="Sumbit Data" onclick="sumbit()" />
+</form>
+
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<script type="text/javascript">
+ var x=1
+ 
+$(document).ready(function(){
+	$(".addCF").click(function(){
+	po=x.toString()
+	var pos = ('value'+po);
+	
+	
+	
+	   
+     
+		$("#customFields").append('<tr valign="top"><th scope="row"><label for="Operator">Operator</label></th><td><select class="query-operator"><option value="iexact" selected="selected">Equals</option><option value="lt">Less Than</option><option value="gt">Greater Than</option><option value="gte">Greater Than or Equal to</option><option value="gte">Less Than or Equal to</option></select></td><td><input type="text" class="code" id="pos" name="value" value="" placeholder="Value" /></td> &nbsp;<td><a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+       
+		
+	});
+    $("#customFields").on('click','.remCF',function(){
+        $(this).parent().parent().remove();
+
+    });
+});
+
+function sumbit() {
+
+        var myTab = document.getElementById('customFields');
+        var values = new Array();
+		
+
+        // LOOP THROUGH EACH ROW OF THE TABLE.
+        for (row = 1; row < myTab.rows.length - 1; row++) {
+            for (c = 0; c < myTab.rows[row].cells.length; c++) {   // EACH CELL IN A ROW.
+
+                var element = myTab.rows.item(row).cells[c];
+                if (element.childNodes[0].getAttribute('type') == 'text') {
+                    values.push("'" + element.childNodes[0].value + "'");
+                }
+            }
+        }
+        console.log(values);
+    }
+</script>
+</body>

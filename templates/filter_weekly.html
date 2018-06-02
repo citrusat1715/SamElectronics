@@ -1,0 +1,181 @@
+
+
+{% load widget_tweaks %}
+
+
+<head>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header" >
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+       <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="{% url 'choose_files_to_compare' %}">COMPARE FILES</a></li>
+<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR CTN DETAIL<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_weekly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='weekly' %}">SHOW/DELETE Weekly Files</a></li>
+            
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR TRAILING CREDIT<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_monthly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='monthly' %}">SHOW/DELETE Monthly Files</a></li>
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">POS REBATE<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_pos_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='pos' %}">SHOW/DELETE  POS Files</a></li>
+          </ul>
+        </li>
+		<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">SEARCH<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'search' file='file1' %}">SEARCH IN WEEKLY CTN</a></li>
+            <li><a href="{% url 'search' file='file2' %}">SEARCH IN MONTHLY TRAILIN</a></li>
+            <li><a href="{% url 'search' file='file3' %}">SEARCH IN POS</a></li>
+			 <li><a href="{% url 'search' file='all' %}">SEARCH IN ALL FILES</a></li>
+          </ul>
+        </li>
+
+   
+	  </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'admin'%}"><span class="glyphicon glyphicon-user"></span>ADMIN</a></li>
+        <li><a><form method="POST" action="">{% csrf_token %}<input type="submit"  value="Export Results" style="margin-top:-14px;"></a></form></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% block content %}
+  <form method="get">
+
+	   <h4 style="margin-left: 10px;"> CHOOSE FILTER</h4>
+
+    <div class="container-fluid"  style="margin-left:10px;padding-top:20px; margin-right:10px; border-bottom:2px solid;border-top:2px solid; height:250px;">
+     
+
+      <div class="row" style="margin-top:5px;">
+
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.location_code.label_tag }}
+          {% render_field filter.form.location_code class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.imei.label_tag }}
+          {% render_field filter.form.imei class="form-control" %}
+        </div>
+        
+		<div class="form-group col-sm-4 col-md-3" style="margin-top:-18px;">
+          {{ filter.form.ctn_activation_date__gt.label_tag }}
+          {% render_field filter.form.ctn_activation_date__gt class="form-control" %}
+        </div>
+		<div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.ctn_activation_date__lt.label_tag }}
+          {% render_field filter.form.ctn_activation_date__lt class="form-control" %}
+        </div>
+		</div>
+		
+		
+		<div class="row">
+		<div class="form-group col-sm-4 col-md-3" style="margin-top:1px;">
+          {{ filter.form.commission_payout__gt.label_tag }}
+          {% render_field filter.form.commission_payout__gt class="form-control" %}
+        </div>
+		<div class="form-group col-sm-4 col-md-3" style="margin-top:20px;">
+          {{ filter.form.commission_payout__lt.label_tag }}
+          {% render_field filter.form.commission_payout__lt class="form-control" %}
+        </div>
+		<div class="form-group col-sm-4 col-md-3" style="margin-top:20px;">
+          {{ filter.form.activity.label_tag }}
+          {% render_field filter.form.activity class="form-control" %}
+        </div>
+	</div>	
+       
+       
+     
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+    </div>
+	 </div>
+  </form>
+<div class="container-fluid" style="margin-left:10px; margin-right:10px; border:2px solid silver;">
+<div class="row">
+
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="padding-bottom:30px;">IMEI</th>
+		<th style="padding-bottom:30px;">ACTIVITY</th>
+		<th style="padding-bottom:30px;">BYOD</th>
+        <th>LOCATION CODE</th>		
+		<th>ACTIVITY DATE</th>
+        
+		<th>AUTO PAY</th>		
+		<th>PORT TYPE</th>
+        <th>COMMISSION PAYOUT</th>
+		<th>ACTIVATION COMISSION</th>
+		<th>CTN ACTIVATION DATE</th>
+		<th style="padding-bottom:30px;">SOURCE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in filter.qs %}
+        <tr>
+          <td><a href="{{result.get_absolute_url}}">{{ result.imei }}</a></td>
+             
+		  <td>{{ result.activity}}</td>
+		  <td>{{result.byod}}</td>
+		   <td>{{ result.location_code }}</td>
+		  <td>{{result.activity_date}}</td>
+         
+          <td>{{result.auto_pay}}</td>		  
+		  <td>{{result.port_type}}</td>
+          <td>${{ result.commission_payout }}</td>
+		  <td>${{result.activation_commission}}</td>
+		   <td>{{ result.ctn_activation_date }}</td>
+		   <td>{{result.file_name}}</td>
+          
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+</div>
+</div>

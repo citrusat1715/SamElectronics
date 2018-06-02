@@ -1,0 +1,304 @@
+<head>
+  <title>SAMS STORE</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.DDlist { display:none; }
+.jav{
+margin:10px;
+background-color:silver;
+
+display:inline-table;
+filterable {
+  margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+  margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+  background-color: transparent;
+  border: none;
+  cursor: auto;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+  color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+  color: #333;
+}
+
+}
+.sidenav-categories{
+
+background-color:white;
+display:block;
+width:150px;
+height:100px;
+margin-left:-12px;
+margin-top:10px;
+
+
+
+border-right:1px solid silver
+
+}
+.sidenav-categories a {
+text-align: left;
+    padding:10px;
+    text-decoration: none;
+    font-size: 15px;
+    font-style:calibri;
+    color: black;
+    display: block;
+}
+.sidenav-categories a:hover {
+     background-color: blue;
+    color: white;
+}
+#center-top{
+display:block;
+margin-top:10px;
+margin-left:-20px;
+margin-right:15px;
+
+display:block;
+
+}
+.center-1{
+display:block;
+margin-top:10px;
+margin-left:50px;
+
+
+}
+.center-top{
+border-top:1px solid silver;
+border-bottom:1px solid silver;
+width:250px;
+
+
+
+}
+.categories{
+font-size:15px;
+color:silver;
+padding:5px;
+}
+
+.center-categoriy-container{
+
+}
+.cat-container1{
+display:block;
+width:150px;
+height:150px;
+margin-left:1000px;
+text-align:center;
+
+
+
+}
+.cat-container{
+display:block;
+width:150px;
+height:150px;
+margin-left:50px;
+text-align:center;
+
+
+
+}
+.img-cat{
+margin:5px;
+
+
+}
+#link-container{
+
+border:2px solid; 
+border-top:2px solid;
+border-bottom:0px solid;
+width:150px; 
+padding:5px;
+margin-left:1px;
+
+}
+
+</style>
+</head>
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header" >
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="{% url 'home' %}">SAM's Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li> <a href="{% url 'choose_files_to_compare' %}">COMPARE FILES</a></li>
+       <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR CTN DETAIL<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_weekly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='weekly' %}">SHOW/DELETE Weekly Files</a></li>
+            
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">VENDOR TRAILING CREDIT<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_monthly_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='monthly' %}">SHOW/DELETE Monthly Files</a></li>
+          </ul>
+        </li>
+		        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">POS REBATE<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'import_pos_file' %}">IMPORT FILE</a></li>
+            <li><a href="{% url 'files' ftype='pos' %}">SHOW/DELETE  POS Files</a></li>
+          </ul>
+        </li>
+		<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">SEARCH<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'search' file='file1' %}">SEARCH IN WEEKLY CTN</a></li>
+            <li><a href="{% url 'search' file='file2' %}">SEARCH IN MONTHLY TRAILIN</a></li>
+            <li><a href="{% url 'search' file='file3' %}">SEARCH IN POS</a></li>
+			 <li><a href="{% url 'search' file='all' %}">SEARCH IN ALL FILES</a></li>
+          </ul>
+        </li>
+
+   
+	  </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'admin'%}"><span class="glyphicon glyphicon-user"></span>ADMIN</a></li>
+        <li><a><form method="POST" action="">{% csrf_token %}<input type="submit"  value="Export Results" style="margin-top:-14px;"></a></form></li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-1">
+<div class="sidenav-categories">
+
+
+ <div class="row" id="link-container" style="">
+  <a href="{% url 'comparison_results'  method='common' file='file1' %}">POS REBATE IMEIS THAT ARE PRESENT IN VENDOR CTN DETAIL</a></div>
+   <div class="row" id="link-container"  style="">
+  <a href="{% url 'comparison_results'  method='uncommon' file='file1' %}">POS REBATE IMEIS THAT ARE NOT PRSENT IN VENDOR CTN DETAIL</a></div>
+   <div class="row" id="link-container"  >
+   <a href="{% url 'comparison_results' method='common' file='file2' %}">POS REBATE IMEIS THAT ARE PRESENT IN VENDOR TRAILING CREDIT</a></div>
+    <div class="row"  id="link-container"  >
+  <a href="{% url 'comparison_results'  method='uncommon' file='file2' %}"><span>POS REBATE IMEIS THAT ARE NOT PRESENT IN VENDOR TRAILING CREDIT</a></div>
+   <div class="row" id="link-container"  >
+  <a href="{% url 'comparison_results'  method='common' file='all' %}">POS REBATE IMEIS THAT ARE PRESENT IN ALL FILES</a></div>
+   <div class="row" id="link-container" style="border-bottom:2px solid;">
+  <a href="{% url 'comparison_results'  method='uncommon' file='all' %}">IMEIS THAT ARE PRESENT IN POS REBATE FILE ONLY</a></div>
+
+
+</div>
+
+</div>
+<div class="col-sm-11">
+<div id="center-top" >
+
+  
+ <div class="container"  style="margin-left:50px; background-color:; border-top:2px solid silver; border-bottom:0px solid silver;"> 
+{% if messages %}
+<span class="messages" style="background-color:red; font-size:20px;">
+    {% for message in messages %}
+    <h{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h>
+    {% endfor %}
+</span>
+{% endif %}
+ <div id="collapse1 ">
+
+  <div class="row">   
+
+    <div class="panel panel-primary filterable" >
+      <div class="panel-heading">
+        <h3 class="panel-title">{{display}}</h3></div>
+        <div class="pull-right"  ></div>
+		
+		
+      <table id="task-list-tbl" class="table" style="  border-bottom:0px solid silver;">
+        <thead>
+          <tr>
+
+            <th>RELATED SN</th>
+            <th>TRACKING NO.</th>
+            <th>PRODUCT NAME</th>
+            <th>RELDATED PRODUCT</th>
+            <th>SOLD ON</th>
+			<th>INVOICED AT</th>
+
+          </tr>
+        </thead>
+       
+		
+		
+		
+        <tbody>
+		 {% if none %}
+		 
+		<tr  scope="row"><td>{{none}}</td></tr>
+		{% else %}
+
+        {% for result in results %}
+ 
+		
+       
+		
+          <tr id="task-1"
+              class="task-list-row" 
+              data-task-id="1"
+              data-assigned-user="Larry"
+              data-status="In Progress"
+              data-milestone="Milestone 2"
+              data-priority="Urgent"
+              data-tags="Tag 2">
+
+            <td><a href="{{result.get_absolute_url}}">{{result.related_sn}}</a></td>
+            <td>{{result.tracking_number}}</td>
+            <td>{{result.product_name}}</td>
+            <td>{{result.related_product}}</td>
+            <td>{{result.sold_on}}</td>
+			<td>{{result.invoiced_at}}</td>
+			
+			
+
+          </tr>
+          
+         {% endfor %}  
+		  
+        </tbody>
+      </table>
+	  {% endif %}
+	  
+		 
+		
+		
+    </div>
+  </div>
+</div>
+
+
+</div>
+ </div> 
+
+</div>

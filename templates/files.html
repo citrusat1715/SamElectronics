@@ -1,0 +1,56 @@
+{% include 'topnavigationbar.html' %}
+
+<style type="text/css" media="screen">
+
+
+.delete{
+text-align:right;
+}
+.h{
+style=" margin-left:5px;
+font-size:25px; 
+width:100px;
+padding:10px;
+height:50px;}
+#t{
+margin-left:15px;
+
+}
+</style>
+
+
+<div id="table_container">
+<div class="row">
+<h style=" margin-left:19px;font-size:30px;">{{display}}</h>
+</div>
+<div class="row">
+<table class="table table-bordered" id="t" >
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th>Upload Date</th>
+        <th>Row Count</th>
+        <th>Action</th>
+     
+      </tr>
+    </thead>
+    <tbody>
+      {% for w in files %}
+        <tr>
+          
+          <td>{{ w.file_name }}</td>
+          <td>{{ w.import_date }}</td>
+          <td>{{ w.count}}</td>
+		  <td>
+			<a name="delete" style=" font-size:20px;" href="{% url 'delete' ftype=ftype fname=w.file_name %}">Delete</a></td>
+		  
+          
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No data</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
