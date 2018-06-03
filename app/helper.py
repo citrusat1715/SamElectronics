@@ -200,11 +200,9 @@ def check_for_float(x):
       return x
 
 def check_length_imei(x):
-    print(x +':'+ str(len(x)))
-    if len(x)<15:
-      print(len(x))
-      if len(x)!=0:
 
+    if len(x)<15:
+      if len(x)!=0:
         diff=15-len(x)
         imei='0'*diff + x
 
