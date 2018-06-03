@@ -135,8 +135,9 @@ def operation_numeric_pos(df):
     df['carrier_price']=df['carrier_price'].map(convert_to_numeric).map(remove_non_numeric_characters)
     df['related_cost']=df['related_cost'].map(convert_to_numeric).map(remove_non_numeric_characters)
     df['related_sn']=df.related_sn.apply(str)
+  
     df['tracking_number']=df.tracking_number.apply(str)
-    df['related_sn']=df['related_sn'].map(check_length_imei).map(convert_to_numeric).map(remove_non_numeric_characters).map(myformat)
+    df['related_sn']=df['related_sn'].map(myformat).map(check_length_imei).map(convert_to_numeric).map(remove_non_numeric_characters)
     df['vendor_sku']=df.vendor_sku.apply(str)
     df['vendor_sku']=df['vendor_sku'].map(myformat)
     df['tracking_number']=df['tracking_number'].map(myformat)    
@@ -199,11 +200,16 @@ def check_for_float(x):
       return x
 
 def check_length_imei(x):
+    print(x +':'+ str(len(x)))
     if len(x)<15:
+      print(len(x))
       if len(x)!=0:
+
         diff=15-len(x)
         imei='0'*diff + x
+
         return imei
+       
     return x
 
 def check_for_date_time(datetime):
