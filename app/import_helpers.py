@@ -1,4 +1,4 @@
-from polls.models import Weekly, POS,  Monthly,ImportHistory
+from app.models import Weekly, POS,  Monthly,ImportHistory
 
 def check_for_file_name_pos(file_name):
     v=ImportHistory.objects.filter(file_type='PosFile')

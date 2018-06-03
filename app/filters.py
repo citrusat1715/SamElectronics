@@ -1,9 +1,9 @@
 from django import forms
-from polls.models import Weekly,Monthly,POS
+from app.models import Weekly,Monthly,POS
 import django_filters
 from django_filters import Filter,DateFromToRangeFilter
 from django_filters.fields import Lookup
-from polls.forms import MonthlyForm
+
 
 
 
@@ -38,7 +38,7 @@ class MonthlyFilter(django_filters.FilterSet):
     class Meta:
         model =Monthly
         fields = ['imei', 'activity_date','qualifying_activity_type','credit_amount','location_id','ctn']
-        form=MonthlyForm
+      
 
 class PosFilter(django_filters.FilterSet):
     product_name = django_filters.CharFilter(name='product_name',lookup_expr='icontains')

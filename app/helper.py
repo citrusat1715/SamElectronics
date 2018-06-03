@@ -96,6 +96,7 @@ def remove_non_numeric_characters(row):
 
 def drop_nulls(df):   
     df=df.dropna()
+    df=df.reset_index(drop=True)
     
     return df
 
@@ -104,7 +105,10 @@ def rename_pos(df):
  
    df.rename(columns=lambda x:(x.replace('\n',' ').replace(' ','_').replace('__','_')).replace('#','number').lower(),inplace=True)
    df.rename(columns={'vendorsku': 'vendor_sku'},inplace=True)
+  
+   df=df.reset_index(drop=True)
    df.replace('',np.nan,inplace=True)
+   
    return df
 def drop_nulls_pos(df):
   
@@ -135,9 +139,9 @@ def operation_numeric_pos(df):
     df['related_sn']=df['related_sn'].map(check_length_imei).map(convert_to_numeric).map(remove_non_numeric_characters).map(myformat)
     df['vendor_sku']=df.vendor_sku.apply(str)
     df['vendor_sku']=df['vendor_sku'].map(myformat)
-    df['tracking_number']=df['tracking_number'].map(myformat)
-    
+    df['tracking_number']=df['tracking_number'].map(myformat)    
     df['related_price']=df['related_price'].map(convert_to_numeric).map(remove_non_numeric_characters)
+
 
     return df
     
@@ -174,7 +178,7 @@ def clean_pos_file(file):
  try:
     df=pd.DataFrame(file)
     df=operation_numeric_pos(df)       
-    df=drop_nulls_pos(df)
+
     df[['unit_rebate','partial_cb','collected','collected','tax_amount','balance','carrier_price','related_cost','related_cost','related_price']]=df[['unit_rebate','partial_cb','collected','collected','tax_amount','balance','carrier_price','related_cost','related_cost','related_price']].apply(pd.to_numeric) 
  except Exception as e:
      print(e)

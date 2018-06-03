@@ -200,11 +200,11 @@ display:block;
       </div>
 	 </div>
   </form>
-<div class="container-fluid" style="margin-left:10px; margin-right:10px; border-top:2px solid ;">
-
+<div class="container-fluid" style="margin-left:10px; margin-right:10px; border-top:2px solid silver;">
+<div class="row">
   
 </form>
-  <table class="table table-bordered" style="border-left:2px solid; border-right:2px solid;">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th>RELATED SN</th>
@@ -239,9 +239,11 @@ display:block;
 		  
           
         </tr>
+		</tbody>
       {% empty %}
+	  <tbody>
         <tr>
-          <td colspan="5">No data</td>
+          <td colspan="10">No data</td>
         </tr>
       {% endfor %}
     </tbody>

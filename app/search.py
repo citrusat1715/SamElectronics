@@ -1,4 +1,4 @@
-from polls.models import Weekly,POS,Monthly
+from app.models import Weekly,POS,Monthly
 import datetime
 import dateutil.parser
 import re

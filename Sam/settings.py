@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # Application definition
-STATIC_ROOT = r'D:\Programming\WebDevelopment\Sam\static\polls'
+STATIC_ROOT = r'D:\Programming\WebDevelopment\Sam\static\app'
 STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX ='/static/admin/'
 STATICFILES_FINDERS = (
@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls',
+    'app',
     'widget_tweaks',
     'rangefilter',
     'django_tables2',    

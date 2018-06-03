@@ -4,15 +4,15 @@ from django.http import HttpResponseBadRequest, HttpResponse
 
 from django import forms
 import django_excel as excel
-from polls.models import Monthly,Weekly,POS,ImportHistory
-from polls.comparison import generate_queryset,compare
-from polls.import_helpers import check_for_file_name_pos,check_for_file_name_weekly,check_for_file_name_monthly
+from app.models import Monthly,Weekly,POS,ImportHistory
+from app.comparison import generate_queryset,compare
+from app.import_helpers import check_for_file_name_pos,check_for_file_name_weekly,check_for_file_name_monthly
 
 from pandas import DataFrame, read_csv
 import re
 
-from polls.helper import clean_weekly_file,clean_monthly_file,clean_pos_file,check_for_float,clean_date,myformat,rename_pos, rename_weekly,rename_monthly,check_for_date_time,check_for_date
-from polls.search import show_search_results,normalize_querystring_weekly,normalize_querystring_pos,normalize_querystring_monthly
+from app.helper import clean_weekly_file,clean_monthly_file,clean_pos_file,check_for_float,clean_date,myformat,rename_pos, rename_weekly,rename_monthly,check_for_date_time,check_for_date
+from app.search import show_search_results,normalize_querystring_weekly,normalize_querystring_pos,normalize_querystring_monthly
 import pandas as pd
 import sys                                          #used to determine py ver
                                   #used to check version no mat
@@ -287,6 +287,7 @@ def upload_weekly_data(request,action):
          action='import'
          df=df.to_dict('dict')
          request.session['dicto']=df
+         print(df['imei'])
 
          return redirect('upload_weekly_data', action)
      else:
@@ -299,6 +300,7 @@ def upload_weekly_data(request,action):
     if action =='import':
          listo=request.session['dicto']        
          rows=len(listo['imei'])
+        
          ob=[]
          file_name=request.session['file_name']
    
@@ -333,7 +335,7 @@ def upload_weekly_data(request,action):
              i=ImportHistory(file_type='WeeklyCTNFile',file_name=file_name,count=rows,remarks='Successful')
              i.save()
              messages.success(request, 'File Imported Successfully successful')
-             return redirect('/admin/polls/weekly')
+             return redirect('/admin/app/weekly')
 
      
 def upload_monthly_data(request,action):  
@@ -384,7 +386,7 @@ def upload_monthly_data(request,action):
              i.save()
              
              messages.success(request, 'File Imported Successfully successful')
-             return redirect('/admin/polls/monthly')
+             return redirect('/admin/app/monthly')
 
 
 def upload_pos_data(request,action):
@@ -444,7 +446,7 @@ def upload_pos_data(request,action):
              i.save()
 
              messages.success(request, 'File Imported Successfully successful')
-             return redirect('/admin/polls/pos')
+             return redirect('/admin/app/pos')
 def choose_files_to_compare(request):
 
 
@@ -678,10 +680,10 @@ def search(request,file):
         m=Monthly.objects.filter(ctn=q)
         if len(m)==0 and len(w)==0 and len(v)==0:
             display='NO RESULTS FOUND IN THREE FILES'
-            return render(request, 'mmmm.html',
+            return render(request, 'filter_all.html',
                      {'w':w,'m':m,'v':v,'display':display})
         display='RESULTS FOUND. CHOOSE THE FILE TO DISPLAY RESULTS'
-        return render(request, 'mmmm.html',
+        return render(request, 'filter_all.html',
                      {'w':w,'m':m,'v':v,'display':display})
        
        if header=='IMEI':
@@ -691,10 +693,10 @@ def search(request,file):
         m=Monthly.objects.filter(imei=q)
         if len(m)==0 and len(w)==0 and len(v)==0:
             display='NO RESULTS FOUND IN THREE FILES'
-            return render(request, 'mmmm.html',
+            return render(request, 'filter_all.html',
                      {'w':w,'m':m,'v':v,'display':display})
         display='RESULTS FOUND. CHOOSE THE FILE TO DISPLAY RESULTS'
-        return render(request, 'mmmm.html',
+        return render(request, 'filter_all.html',
                      {'w':w,'m':m,'v':v,'display':display})
         
        if header=='ACTIVITY':
@@ -705,13 +707,13 @@ def search(request,file):
         
         if len(m)==0 and len(w)==0 and len(v)==0:
             display='NO RESULTS FOUND IN THREE FILES'
-            return render(request, 'mmmm.html',
+            return render(request, 'filter_all.html',
                      {'w':w,'m':m,'v':v,'display':display})
         display='RESULTS FOUND. CHOOSE THE FILE TO DISPLAY RESULTS'
-        return render(request, 'mmmm.html',
+        return render(request, 'filter_all.html',
                      {'w':w,'m':m,'v':v,'display':display})
        
-       return render(request, 'mmmm.html'
+       return render(request, 'filter_all.html'
                      )
 
 def export_data(request, file):
@@ -830,7 +832,7 @@ def files(request, ftype):
  if ftype=='pos':
      display='POS Files'
      return render(request, 'files.html',{'files':vf,'display':display,'ftype':ftype})
-def delete(request,ftype,fname,template_name='deletecategory.html'):
+def delete(request,ftype,fname,template_name='delete.html'):
   if request.method=='POST':
     if request.POST.get('Yes'):
      if ftype=='weekly':

@@ -12,101 +12,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
 
 
-.sidenav-categories{
-
-background-color:white;
-display:block;
-width:140px;
-height:100%;
-margin-left:-12px;
-margin-top:10px;
-
-
-
-border-right:1px solid silver
-
-}
-.sidenav-categories a {
-text-align: left;
-    padding:10px;
-    text-decoration: none;
-    font-size: 15px;
-    font-style:calibri;
-    color: black;
-    display: block;
-}
-.sidenav-categories a:hover {
-     background-color: blue;
-    color: white;
-}
-.center-top{
-display:block;
-margin-top:10px;
-margin-left:50px;
-margin-right:15px;
-
-display:block;
-
-}
-.center-1{
-display:block;
-margin-top:10px;
-margin-left:50px;
-
-
-}
-#center-top{
-border-top:1px solid silver;
-border-bottom:1px solid silver;
-
-
-
-}
-.categories{
-font-size:15px;
-color:silver;
-padding:5px;
-}
-
-.center-categoriy-container{
-
-}
-.cat-container1{
-display:block;
-width:150px;
-height:150px;
-margin-left:1000px;
-text-align:center;
-
-
-
-}
-.cat-container{
-display:block;
-width:150px;
-height:150px;
-margin-left:50px;
-text-align:center;
-
-
-
-}
-.img-cat{
-margin:5px;
-
-
-}
-#cat-container{
-
-margin-left:50px;
-display:block;
-
-}
-
-</style>
 </head>
 
 <nav class="navbar navbar-inverse ">
@@ -117,7 +24,7 @@ display:block;
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-        <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+       <a class="navbar-brand" href="{% url 'home' %}">Home</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -172,8 +79,12 @@ display:block;
 {% endif %}
 {% block content %}
   <form method="get">
-    <h4 style="margin-left: 10px;"> CHOOSE FILTER</h4>
-    <div class="container-fluid"  style="margin-left:10px;padding-top:10px; margin-right:10px; border-bottom:2px solid;border-top:2px solid; height:210px;">
+
+	   <h4 style="margin-left: 10px;"> CHOOSE FILTER</h4>
+
+    <div class="container-fluid"  style="margin-left:10px;padding-top:20px; margin-right:10px; border-bottom:2px solid;border-top:2px solid; height:250px;">
+     
+
       <div class="row" style="margin-top:5px;">
 
         <div class="form-group col-sm-4 col-md-3">
@@ -205,19 +116,21 @@ display:block;
           {{ filter.form.credit_amount__lt.label_tag }}
           {% render_field filter.form.credit_amount__lt class="form-control" %}
         </div>       
-      </div>
+	</div>	
+       
+       
+     
       <button type="submit" class="btn btn-primary">
         <span class="glyphicon glyphicon-search"></span> Search
       </button>
     </div>
-	</div>
-	
+	 </div>
   </form>
-<div class="container-fluid" style="margin-left:10px; margin-right:10px; border-top:2px solid ;">
-
+<div class="container-fluid" style="margin-left:10px; margin-right:10px; border:2px solid silver;">
 <div class="row">
 
-  <table class="table table-bordered" style="border-left:2px solid; border-right:2px solid;">
+
+  <table class="table table-bordered">
     <thead>
 	
       <tr>
@@ -242,9 +155,11 @@ display:block;
 		  <td>{{ result.credit_amount}}</td>
           
         </tr>
+		</tbody>
       {% empty %}
+	  <tbody>
         <tr>
-          <td colspan="5">No data</td>
+          <td colspan="11">No data</td>
         </tr>
       {% endfor %}
     </tbody>

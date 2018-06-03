@@ -1,4 +1,4 @@
-from polls.models import Monthly,Weekly,POS
+from app.models import Monthly,Weekly,POS
 global v_fil
 v_fil=''
 

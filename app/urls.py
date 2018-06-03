@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from polls import views as views
+from app import views as views
 
 
 
