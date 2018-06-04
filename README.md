@@ -1,32 +1,32 @@
-# for updating 
+## for updating 
 
-## 1. service supervisor restart Sam
-## 2. service nginx restart 
+### 1. service supervisor restart Sam
+### 2. service nginx restart 
 
-# code base location: cd /home/projects/Sam/src
+## code base location: cd /home/projects/Sam/src
 
-# pulling new code : git pull origin master
+## pulling new code : git pull origin master
 
-# mysql 
-## user : root
-## mysql pass : this1sm3
-## database name: Sam
+## mysql 
+### user : root
+### mysql pass : this1sm3
+### database name: Sam
 
-# log files: /home/projects/Sam/logs
+## log files: /home/projects/Sam/logs
 
-# production(server) database on settings.py file
-## DATABASES = {
-##     'default': {
-##         'ENGINE': 'django.db.backends.mysql',
-##         'NAME': 'Sam',
-##         'USER': 'root',
-##         'PASSWORD': 'this1sm3',
-##         'HOST': 'localhost',
-##         'PORT': '',
-##     }
-## }
+## production(server) database on settings.py file
+### DATABASES = {
+###     'default': {
+###         'ENGINE': 'django.db.backends.mysql',
+###         'NAME': 'Sam',
+###         'USER': 'root',
+###         'PASSWORD': 'this1sm3',
+###         'HOST': 'localhost',
+###         'PORT': '',
+###     }
+### }
 
-# linux create super user :
-## add user: adduser <username>
-## add user as super user(sudo group): gpasswd -a <username> sudo
+## linux create super user :
+### add user: adduser username
+### add user as super user(sudo group): gpasswd -a username sudo
 
