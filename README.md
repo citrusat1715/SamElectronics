@@ -14,4 +14,15 @@
 
 #log files: /home/projects/Sam/logs
 
+#production(server) database on settings.py file
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Sam',
+        'USER': 'root',
+        'PASSWORD': 'this1sm3',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
