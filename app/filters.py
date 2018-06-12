@@ -11,8 +11,17 @@ class ListFilter(Filter):
     def filter(self, qs, value):
         if value =='':
             return super(ListFilter, self).filter(qs, Lookup(value, 'in'))
+        
         else:
-         value_list = value.split(u',')
+           value_list=[]
+           value=list(value)
+           total_numbers=len(value)
+           total_imeis=int(total_numbers/15)
+           x=0
+           for i in range(0,total_imeis):
+            y=((i+1)*15)
+            value_list.append(''.join(value[x:y]))
+            x=y         
         return super(ListFilter, self).filter(qs, Lookup(value_list, 'in'))
 class WeeklyFilter(django_filters.FilterSet):
     activity = django_filters.CharFilter(lookup_expr='icontains')

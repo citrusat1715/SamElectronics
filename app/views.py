@@ -688,9 +688,18 @@ def search(request,file):
        
        if header=='IMEI':
         q=re.sub('[^0-9]','',q)
-        w=Weekly.objects.filter(imei=q)
-        v=POS.objects.filter(related_sn=q)
-        m=Monthly.objects.filter(imei=q)
+        value_list=[]
+        value=list(q)
+        total_numbers=len(value)
+        total_imeis=int(total_numbers/15)
+        x=0
+        for i in range(0,total_imeis):
+         y=((i+1)*15)
+         value_list.append(''.join(value[x:y]))
+         x=y
+        w=Weekly.objects.filter(imei__in=value_list)
+        v=POS.objects.filter(related_sn__in=value_list)
+        m=Monthly.objects.filter(imei__in=value_list)
         if len(m)==0 and len(w)==0 and len(v)==0:
             display='NO RESULTS FOUND IN THREE FILES'
             return render(request, 'filter_all.html',
