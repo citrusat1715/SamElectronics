@@ -7,7 +7,7 @@ chardet==3.0.4
 codecov==2.0.15
 coverage==4.5.1
 dj-database-url==0.5.0
-Django==1.10.8
+Django==1.11.28
 django-admin-rangefilter==0.3.5
 django-advanced-filters==1.0.7.1
 django-appconf==1.0.2
