@@ -1,6 +1,6 @@
 Babel==2.5.1
 beautifulsoup4==4.6.0
-bleach==2.1.1
+bleach==3.1.1
 Cartridge==0.12.0
 certifi==2017.7.27.1
 chardet==3.0.4
